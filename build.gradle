@@ -21,7 +21,7 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'kotlin'
-apply plugin: "maven-publish"
+apply plugin: 'maven-publish'
 
 gradlePlugin {
     plugins {
@@ -78,8 +78,10 @@ tasks.withType(Test).configureEach {
     }
 }
 
-group = GROUP
-version = VERSION
+allprojects {
+    group = GROUP
+    version = VERSION
+}
 
 publishing {
     repositories {
@@ -89,7 +91,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = project.group
-            artifactId = project.name
+            artifactId = name
             version = project.version
 
             from components.java
