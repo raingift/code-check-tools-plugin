@@ -21,7 +21,7 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'kotlin'
-apply plugin: "maven-publish"
+apply plugin: 'maven-publish'
 
 gradlePlugin {
     plugins {
@@ -88,9 +88,9 @@ publishing {
 
     publications {
         mavenJava(MavenPublication) {
-            groupId = project.group
+            groupId = "com.hermes"
             artifactId = project.name
-            version = project.version
+            version = "0.0.1"
 
             from components.java
         }
