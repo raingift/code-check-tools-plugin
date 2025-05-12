@@ -3,6 +3,7 @@ package com.hermes.code.quality.tools
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Classpath
@@ -54,7 +55,19 @@ abstract class DetektCheckTask : DefaultTask() {
 
     @OutputDirectory
     lateinit var outputDirectory: File
-
+    
+    @Input
+    @Optional
+    var plugins: String? = null
+    
+    @Input
+    @Optional
+    var autoCorrect: Boolean? = false
+    
+    @Input
+    @Optional
+    var disableDefaultRulesets: Boolean? = false
+    
     init {
         group = "verification"
         description = "Runs detekt."
@@ -76,6 +89,9 @@ abstract class DetektCheckTask : DefaultTask() {
             it.inputFile.set(inputFile)
             it.outputDirectory.set(outputDirectory)
             it.parallel.set(parallel)
+            it.plugins.set(plugins)
+            it.autoCorrect.set(autoCorrect)
+            it.disableDefaultRulesets.set(disableDefaultRulesets)
         }
     }
 }
@@ -95,6 +111,9 @@ internal interface DetektParameters : WorkParameters {
     val inputFile: RegularFileProperty
     val outputDirectory: RegularFileProperty
     val parallel: Property<Boolean>
+    val plugins: Property<String?>
+    val autoCorrect: Property<Boolean?>
+    val disableDefaultRulesets: Property<Boolean?>
 }
 
 internal abstract class DetektWorker @Inject internal constructor(
@@ -158,6 +177,21 @@ internal abstract class DetektWorker @Inject internal constructor(
             parameters.baselineFilePath.orNull?.let {
                 task.args("--baseline", it)
             }
+            
+            if (parameters.autoCorrect.get() == true) {
+                task.args("--auto-correct")
+            }
+            
+            if (parameters.disableDefaultRulesets.get() == true) {
+                task.args("--disable-default-rulesets")
+            }
+            
+            parameters.plugins.orNull?.let {
+                if (it.isNotEmpty()) {
+                    task.args("--plugins", it)
+                }
+            }
+            println("task: ${task.args}")
         }
     }
 }

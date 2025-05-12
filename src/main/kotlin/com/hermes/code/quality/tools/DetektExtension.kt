@@ -49,4 +49,22 @@ open class DetektExtension {
      * @since 0.21.0
      */
     var input: String = "."
+    
+    /**
+     * Auto correct code
+     * Defaults to false
+     */
+    var autoCorrect: Boolean = false
+    
+    /**
+     * DisableDefault rules set
+     * Default to false
+     */
+    var disableDefaultRulesets: Boolean = false
+    
+    /**
+     * Formatting plugins
+     * plugins absolutePath
+     */
+    var plugins: String? = null
 }

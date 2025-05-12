@@ -273,6 +273,10 @@ fun Project.addDetekt(rootProject: Project, extension: CodeQualityToolsPluginExt
             task.classpath.from(detektConfiguration)
             task.inputs.files(kotlinFiles(baseDir = extension.detekt.input))
             task.inputs.property("baseline-file-exists", false)
+            
+            task.plugins = extension.detekt.plugins
+            task.autoCorrect = extension.detekt.autoCorrect
+            task.disableDefaultRulesets = extension.detekt.disableDefaultRulesets
 
             extension.detekt.baselineFileName?.let {
                 val file = file(it)
