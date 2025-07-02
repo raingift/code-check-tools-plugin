@@ -58,11 +58,13 @@ publishing {
     publications {
         pluginMaven(MavenPublication) {
             groupId = project.group
+            artifactId = "code-check-tools-plugin"
             version = project.version
         }
 
         pluginMarker(MavenPublication) {
             groupId = project.group
+            artifactId = "code-check-tools-plugin"
             version = project.version
         }
     }
