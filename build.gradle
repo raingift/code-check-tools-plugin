@@ -18,7 +18,6 @@ buildscript {
     }
 }
 
-apply plugin: 'java-library'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
@@ -89,12 +88,10 @@ publishing {
     }
 
     publications {
-        mavenJava(MavenPublication) {
+        pluginMarker(MavenPublication) {
             groupId = project.group
-            artifactId = name
+            artifactId = "code-check-tools-plugin"
             version = project.version
-
-            from components.java
         }
     }
 }
