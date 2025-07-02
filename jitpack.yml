@@ -1,2 +1,4 @@
 jdk:
   - openjdk17
+build:
+  - ./gradlew :publishToMavenLocal  # 仅发布插件
